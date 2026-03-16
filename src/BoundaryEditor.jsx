@@ -161,8 +161,8 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
 
     const latLngs = currentBoundary.map(b => [b[1], b[0]]);
     polygonRef.current = L.polygon(latLngs, {
-      color: '#991b1b', weight: 2.5, fillColor: '#991b1b',
-      fillOpacity: 0.06, dashArray: '6, 3', interactive: false
+      color: '#dc2626', weight: 7, fillColor: '#dc2626',
+      fillOpacity: 0.12, interactive: false
     }).addTo(map);
 
     const n = currentBoundary[0][0] === currentBoundary[currentBoundary.length-1][0] &&
