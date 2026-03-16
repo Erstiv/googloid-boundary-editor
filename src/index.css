@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f0f2f5;
+  color: #1a202c;
+}
+
+/* Leaflet popup overrides */
+.leaflet-popup-content-wrapper { border-radius: 8px !important; }
+.leaflet-popup-content { margin: 10px 14px !important; font-size: 13px !important; }
