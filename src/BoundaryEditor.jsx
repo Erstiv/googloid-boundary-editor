@@ -53,6 +53,7 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
   const [saved, setSaved] = useState(false);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
 
   // PDF field selection
   const [showExportPanel, setShowExportPanel] = useState(false);
@@ -126,7 +127,8 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
     });
     L.control.layers({ 'Street': map._layers[Object.keys(map._layers)[0]], 'Satellite': sat }).addTo(map);
     mapInstanceRef.current = map;
-    return () => { map.remove(); mapInstanceRef.current = null; };
+    setMapReady(true);
+    return () => { map.remove(); mapInstanceRef.current = null; setMapReady(false); };
   }, [loading]);
 
   // ── Render map ──
@@ -256,9 +258,9 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
       cm.addTo(map);
       parcelMarkersRef.current.push(cm);
     });
-  }, [mode, allParcels]);
+  }, [mode, allParcels, mapReady]);
 
-  useEffect(() => { renderMap(); }, [boundary, mode, renderMap]);
+  useEffect(() => { if (mapReady) renderMap(); }, [boundary, mode, renderMap, mapReady]);
 
   // Click-to-add
   useEffect(() => {
