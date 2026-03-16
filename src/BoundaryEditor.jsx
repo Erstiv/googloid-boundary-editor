@@ -507,7 +507,13 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
               placeholder="Search..." style={{ padding: '3px 8px', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '12px', width: '120px' }} />
           </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
-            {filteredParcels.sort((a, b) => ((a.street||'')+(a.address||a.addr||'')).localeCompare((b.street||'')+(b.address||b.addr||''))).map((p, i) => {
+            {filteredParcels.sort((a, b) => {
+              const aAddr = (a.address||a.addr||'').trim();
+              const bAddr = (b.address||b.addr||'').trim();
+              if (!aAddr && bAddr) return 1;
+              if (aAddr && !bAddr) return -1;
+              return ((a.street||'')+aAddr).localeCompare((b.street||'')+bAddr);
+            }).map((p, i) => {
               const val = (p.total_val || p.totalVal || 0);
               const valStr = val >= 1e6 ? '$' + (val/1e6).toFixed(1) + 'M' : '$' + Math.round(val/1e3) + 'K';
               return (
