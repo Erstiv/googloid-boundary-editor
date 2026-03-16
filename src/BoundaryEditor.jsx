@@ -116,7 +116,7 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
 
   // ── Map init ──
   useEffect(() => {
-    if (mapInstanceRef.current) return;
+    if (mapInstanceRef.current || !mapRef.current || loading) return;
     const map = L.map(mapRef.current, { zoomControl: true }).setView([42.304, -71.516], 14);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OSM', maxZoom: 19
@@ -127,7 +127,7 @@ export default function BoundaryEditor({ allParcels, authToken, currentUser }) {
     L.control.layers({ 'Street': map._layers[Object.keys(map._layers)[0]], 'Satellite': sat }).addTo(map);
     mapInstanceRef.current = map;
     return () => { map.remove(); mapInstanceRef.current = null; };
-  }, []);
+  }, [loading]);
 
   // ── Render map ──
   const renderMap = useCallback(() => {
