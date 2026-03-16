@@ -74,7 +74,7 @@ function drawMapOnPDF(pdf, boundary, insideParcels, x, y, w, h) {
   const toY = (lat) => y + h - ((lat - minLat) / latRange) * h;
 
   // Background
-  pdf.setFillColor(240, 244, 248);
+  pdf.setFillColor(215, 225, 235);
   pdf.rect(x, y, w, h, 'F');
 
   // Parcel dots
